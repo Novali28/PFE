@@ -3,7 +3,7 @@
     <v-app>
       <NavBar :titles="titles" /><br><br>
       <keep-alive>
-      <router-view name="locCentral" :elements="elements"></router-view>
+      <router-view name="locCentral"></router-view>
       </keep-alive>
       <Footer></Footer>
     </v-app>
@@ -13,15 +13,13 @@
 <script>
   import NavBar from './components/NavBar.vue'
   import Footer from './components/Footer.vue'
-  import {elements} from './model.js'
   
   export default {
     name: 'App',
     data : () => {
       return {
         titles : [ { text: "Home", color:"black", path:"/home"}, { text: "Arbre", color:"black", path:"/tree"}, { text: "Intervenants", color:"black", path:"/intervenants"}, { text: "Projets", color:"black", path:"/projets"} ],
-        currentMenu : 0,
-        elements : elements
+        currentMenu : 0
       }
     },
     components: {
