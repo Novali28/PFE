@@ -12,7 +12,7 @@
     </v-app-bar>
 
     <v-sheet class="overflow-y-auto" max-height="600">
-      <v-container style="height: 115px;"></v-container>
+      <v-container style="height: 113px;"></v-container>
     </v-sheet>
 
   </v-card>

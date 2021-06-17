@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Tree from '../views/Tree.vue'
-import Intervenants from '../views/Intervenants.vue'
+import Enseignants from '../views/Enseignants.vue'
+import Projets from '../views/Projets.vue'
 
 Vue.use(VueRouter)
 
@@ -22,10 +23,17 @@ const routes = [
     }
   },
   {
-    path: '/intervenants',
-    name: 'Intervenants',
+    path: '/enseignants',
+    name: 'Enseignants',
     components: {
-      locCentral: Intervenants
+      locCentral: Enseignants
+    }
+  },
+  {
+    path: '/projets',
+    name: 'Projets',
+    components: {
+      locCentral: Projets
     }
   }
 ]

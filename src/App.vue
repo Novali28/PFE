@@ -1,13 +1,13 @@
 <template>
-  <div id="app">
-    <v-app>
-      <NavBar :titles="titles" /><br><br>
+  <v-app>
+    <NavBar :titles="titles" /><br><br>
+    <div id="main">
       <keep-alive>
-      <router-view name="locCentral"></router-view>
+        <router-view name="locCentral"></router-view>
       </keep-alive>
-      <Footer></Footer>
-    </v-app>
-  </div>
+    </div>
+    <Footer></Footer>
+  </v-app>
 </template>
 
 <script>
@@ -18,7 +18,7 @@
     name: 'App',
     data : () => {
       return {
-        titles : [ { text: "Home", color:"black", path:"/home"}, { text: "Arbre", color:"black", path:"/tree"}, { text: "Intervenants", color:"black", path:"/intervenants"}, { text: "Projets", color:"black", path:"/projets"} ],
+        titles : [ { text: "Home", color:"black", path:"/home"}, { text: "Enseignants", color:"black", path:"/enseignants"}, { text: "Projets", color:"black", path:"/projets"},{ text: "Décomposition", color:"black", path:"/tree"} ],
         currentMenu : 0
       }
     },
@@ -35,8 +35,6 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #000000;
-    margin-top: 0px;
-    padding-bottom:20px;
   }
   h1{
     color: #91C251;
@@ -44,5 +42,8 @@
   }
   p{
     text-align: center;
+  }
+  #main{
+    padding-bottom: 80px;
   }
 </style>

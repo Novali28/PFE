@@ -1,16 +1,14 @@
 <template>
-  <v-footer app>
-    <v-col
-      class="text-center" style="margin-left: 300px"
-    >
-      2021 — <strong>Vuetify</strong>
-    </v-col>
-    <v-img
-        max-height="150"
-        max-width="250"
+  <v-footer absolute fixed app class="text-center">
+    <v-row justify="center" no-gutters>
+      <v-img max-height="120" max-width="200"
         src="https://file.diplomeo-static.com/file/00/00/01/55/15559.svg"
       >
       </v-img>
+      <v-card-text>
+        2021 — <strong>Vuetify</strong>
+      </v-card-text>
+    </v-row>
   </v-footer>
 </template>
 

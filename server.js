@@ -86,26 +86,46 @@ const query="INSERT INTO statut SET ?";
 const params={nom:req.nom,surnom:req.surnom,qtte_heures:req.qtth,qtte_heures_sup:req.qtthsup}
 connection.query(query,params,(err,result,fields) => {
   if(err) throw err;
-  response.json({saved:result.affectedRows,inserted_id:result.insertId})
+  	response.setHeader('Access-Control-Allow-Origin', '*');
+	response.json({saved:result.affectedRows,inserted_id:result.insertId})
 });
+	return response;
 })
 
 //obtention statuts
 app.get("/get-statuts", (request, response) => {
 connection.query('SELECT * FROM statut', (err,rows) => {
   	if(err) throw err;
-	response.setHeader(
-		'Access-Control-Allow-Origin', '*'
-	);
-	response.statusCode = 200;
+  	response.setHeader('Access-Control-Allow-Origin', '*');
 	response.json({data:rows});
+});
+	return response;
+})
+
+//modification statut
+app.get("/update-statut", (request, response) => {
+const req=request.query
+const query="UPDATE statut SET ? where statut_id=?";
+const params=[{nom:req.nom,surnom:req.surnom,qtte_heures:req.qtth,qtte_heures_sup:req.qtth_sup},req.id]
+connection.query(query,params,(err,result,fields) => {
+  if(err) throw err;
+  	response.setHeader('Access-Control-Allow-Origin', '*');
+  	response.json({deleted:result.affectedRows})
 });
 	return response;
 })
 
 //suppression statut
 app.get("/delete-statut", (request, response) => {
-supprimer(request,response,"statut")
+const req=request.query
+const query="DELETE FROM statut where statut_id=?";
+const params=[req.id]
+connection.query(query,params,(err,result,fields) => {
+  if(err) throw err;
+  	response.setHeader('Access-Control-Allow-Origin', '*');
+  	response.json({deleted:result.affectedRows})
+});
+	return response;
 })
 
 //  -------------  ENSEIGNANT  -------------
@@ -118,11 +138,8 @@ var surnom=req.prenom.charAt(0)+req.nom.charAt(0)+req.nom.charAt(1);
 const params={prenom:req.prenom,nom:req.nom,surnom:surnom,email:req.email,statut_id:req.statut}
 connection.query(query,params,(err,result,fields) => {
   if(err) throw err;
-  	response.setHeader(
-		'Access-Control-Allow-Origin', '*'
-	);
-	response.statusCode = 200;
-  response.json({saved:result.affectedRows,inserted_id:result.insertId})
+  	response.setHeader('Access-Control-Allow-Origin', '*');
+  	response.json({saved:result.affectedRows,inserted_id:result.insertId})
 });
 })
 
@@ -130,27 +147,33 @@ connection.query(query,params,(err,result,fields) => {
 app.get("/get-enseignants", (request, response) => {
 connection.query('SELECT * FROM enseignant', (err,rows) => {
   if(err) throw err;
-  response.setHeader(
-    'Access-Control-Allow-Origin', '*'
-  );
-  response.json({data:rows}),
-  response.statusCode = 200;
+  	response.setHeader('Access-Control-Allow-Origin', '*');
+  	response.json({data:rows})
 });
-return response;
+})
+
+//modification enseignant
+app.get("/update-enseignant", (request, response) => {
+const req=request.query
+const query="UPDATE enseignant SET ? where enseignant_id=?";
+var surnom=req.prenom.charAt(0)+req.nom.charAt(0)+req.nom.charAt(1);
+const params=[{prenom:req.prenom,nom:req.nom,surnom:surnom,email:req.email,statut_id:req.statut},req.id]
+connection.query(query,params,(err,result,fields) => {
+  if(err) throw err;
+  	response.setHeader('Access-Control-Allow-Origin', '*');
+  	response.json({deleted:result.affectedRows})
+});
 })
 
 //suppression enseignant
 app.get("/delete-enseignant", (request, response) => {
 const req=request.query
-const query="DELETE FROM enseignant where nom=?";
-const params=[req.nom]
+const query="DELETE FROM enseignant where enseignant_id=?";
+const params=[req.id]
 connection.query(query,params,(err,result,fields) => {
   if(err) throw err;
-   response.setHeader(
-		'Access-Control-Allow-Origin', '*'
-	);
-	response.statusCode = 200;
-  response.json({deleted:result.affectedRows})
+  	response.setHeader('Access-Control-Allow-Origin', '*');
+  	response.json({deleted:result.affectedRows})
 });
 })
 
@@ -164,7 +187,8 @@ var CURRENT_TIMESTAMP = mysql.raw('now()');
 const params={nom:req.nom,date:CURRENT_TIMESTAMP,verrou:req.verrou,archive:req.archive}
 connection.query(query,params,(err,result,fields) => {
   if(err) throw err;
-  response.json({saved:result.affectedRows,inserted_id:result.insertId})
+	response.setHeader('Access-Control-Allow-Origin', '*');
+  	response.json({saved:result.affectedRows,inserted_id:result.insertId})
 });
 })
 
@@ -172,17 +196,32 @@ connection.query(query,params,(err,result,fields) => {
 app.get("/get-projets", (request, response) => {
 connection.query('SELECT * FROM projet', (err,rows) => {
   if(err) throw err;
+  response.setHeader('Access-Control-Allow-Origin', '*');
   response.json({data:rows})
 });
 })
 
+//modification projet
+app.get("/update-projet", (request, response) => {
+const req=request.query
+const query="UPDATE projet SET ? where projet_id=?";
+const params=[{nom:req.nom,verrou:req.verrou,archive:req.archive},req.id]
+connection.query(query,params,(err,result,fields) => {
+  if(err) throw err;
+  	response.setHeader('Access-Control-Allow-Origin', '*');
+  	response.json({deleted:result.affectedRows})
+});
+})
+
+
 //suppression projet
 app.get("/delete-projet", (request, response) => {
 const req=request.query
-const query="DELETE FROM projet where nom=?";
-const params=[req.nom]
+const query="DELETE FROM projet where projet_id=?";
+const params=[req.id]
 connection.query(query,params,(err,result,fields) => {
   if(err) throw err;
+  response.setHeader('Access-Control-Allow-Origin', '*');
   response.json({deleted:result.affectedRows})
 });
 })
@@ -204,6 +243,7 @@ connection.query(query,params,(err,result,fields) => {
 app.get("/get-intervenants", (request, response) => {
 connection.query('SELECT * FROM intervenant', (err,rows) => {
   if(err) throw err;
+  response.setHeader('Access-Control-Allow-Origin', '*');
   response.json({data:rows})
 });
 })
